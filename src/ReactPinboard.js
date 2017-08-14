@@ -49,7 +49,12 @@ class ReactPinboard extends React.Component {
   
   forceRefresh() {
     const childWeights = this.childRefs.map((c) => {
-      return ReactDOM.findDOMNode(c).children[0].offsetHeight;
+      const node = ReactDOM.findDOMNode(c)
+      if (!(node && node.children && node.children.length > 0)) {
+        return 1;
+      }
+
+      return node.children[0].offsetHeight;
     });
     const newColumns = _createColumnOrdering(childWeights, this.getNumCols());
     
